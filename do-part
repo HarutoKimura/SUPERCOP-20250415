@@ -10,7 +10,8 @@ opfocus=${focus}_${pfocus}
 
 version=`cat version`
 project=supercop
-shorthostname=`$SSHDEVICE hostname | sed 's/\..*//' | tr -cd '[a-z][A-Z][0-9]' | tr '[A-Z]' '[a-z]'`
+SSHDEVICE=${SSHDEVICE:-}
+shorthostname=`${SSHDEVICE:+$SSHDEVICE }hostname | sed 's/\..*//' | tr -cd '[a-z][A-Z][0-9]' | tr '[A-Z]' '[a-z]'`
 
 top="`pwd`/bench/$shorthostname"
 bin="$top/bin"
@@ -123,7 +124,7 @@ then
   cp -pR "$work"/lib/* "$lib/nontimecop"
   cp -pR "$work"/include/* "$include/nontimecop"
   
-  if $SSHDEVICE valgrind pwd >/dev/null 2>&1
+  if ${SSHDEVICE:+$SSHDEVICE }valgrind pwd >/dev/null 2>&1
   then
     echo "=== `date` === building cpucycles for TIMECOP"
     rm -rf "$work"

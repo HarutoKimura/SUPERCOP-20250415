@@ -3,5 +3,13 @@ name = "crypto_scalarmult_curve25519"
 version = "0.1.0"
 edition = "2018"
 
+[lib]
+name = "crypto_scalarmult_curve25519"
+crate-type = ["staticlib", "rlib"]
+
 [dependencies]
-rust-crypto = "^0.2"
+curve25519-dalek = "4"
+
+[profile.release]
+lto = false
+opt-level = 3
